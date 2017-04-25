@@ -6,6 +6,9 @@
 *Version 1.0
 */
 package modelo;
+
+import java.math.BigInteger;
+
  /*Polinomios: Listas doblemente ligadas con funciones extendidas 
  *             Los nodos de la lista tienen un monomio en su campo dato 
  *             Los monomios tienen un coeficiente y un exponente     
@@ -16,7 +19,7 @@ public class Polynom extends DoubleList {
     *construye el polinomio nulo 0x0
     */
     public Polynom() { 
-        Monomio m = new Monomio(0, 0);
+        Monomio m = new Monomio(BigInteger.ZERO, 0);
         insert(m, lastNode());        
     }
      
@@ -29,7 +32,7 @@ public class Polynom extends DoubleList {
             char a=p.charAt(j);
             String c="";
             String e="";
-            double coef;
+            BigInteger coef;
             int exp;
             Monomio m;
             boolean continuar= true;
@@ -79,7 +82,7 @@ public class Polynom extends DoubleList {
             }
         
          ////SE CREA UN MONOMIO NUEVO Y SE INSERTA EN LA LISTA
-            coef = Double.parseDouble(c);
+            coef = BigInteger.valueOf(Long.parseLong(c));
             exp = Integer.parseInt(e);
             m = new  Monomio(coef, exp);
             insert(m, lastNode());
@@ -127,7 +130,7 @@ public class Polynom extends DoubleList {
 
             while (!isTheEnd(y)){
             if(x.getData().getExp()== y.getData().getExp() && x!=y){
-                x.getData().setCoef(x.getData().getCoef()+y.getData().getCoef());
+                x.getData().setCoef(x.getData().getCoef().add(y.getData().getCoef()));
                 w = y;
                 y= y.getRight();
                 delete(w);
@@ -149,10 +152,10 @@ public class Polynom extends DoubleList {
        while(!this.isTheEnd(y)){
             mono= y.getData();
 
-        if(mono.getCoef()==0){
+        if(mono.getCoef()==BigInteger.ZERO){
             y=y.getRight();
         }else{
-            if(mono.getCoef()==1 || mono.getCoef()==-1){
+            if(mono.getCoef()==(BigInteger.ONE) || mono.getCoef()==BigInteger.valueOf(Long.parseLong("-1"))){
                 if(mono.getExp()!=0){
                      if(mono.getExp()==1){
                         r=r+getSymbol(mono.getCoef())+"x";
@@ -197,9 +200,9 @@ public class Polynom extends DoubleList {
     *se encarga de idenficar el signo de un numero real  (double) para poder imprimerlo adecuadamente
     *Es útil para los casos en los que el número es positivo porque el simbolo '+' se pierde a la hora de imprimirlo
     */
-    private String getSymbol(double s){
+    private String getSymbol(BigInteger s){
         String symbol="";
-        if (s>0){
+        if (s.signum()==1){
             symbol="+";        
         }else symbol ="-";        
         return symbol;
