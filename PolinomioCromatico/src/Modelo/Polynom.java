@@ -35,7 +35,7 @@ public class Polynom extends DoubleList {
             BigInteger coef;
             int exp;
             Monomio m;
-            boolean continuar= true;
+            boolean continuar;
             
       //////SE COLECTA UN COEFICIENTE
             if(a=='-' || a=='+'){
@@ -186,7 +186,7 @@ public class Polynom extends DoubleList {
         
        }
        
-       if(r!="" && r.charAt(0)=='+'){
+       if(!r.equals("") && r.charAt(0)=='+'){
            r= r.substring(1);
            return r;
        }
@@ -201,7 +201,7 @@ public class Polynom extends DoubleList {
     *Es útil para los casos en los que el número es positivo porque el simbolo '+' se pierde a la hora de imprimirlo
     */
     private String getSymbol(BigInteger s){
-        String symbol="";
+        String symbol;
         if (s.signum()==1){
             symbol="+";        
         }else symbol ="-";        
@@ -212,11 +212,11 @@ public class Polynom extends DoubleList {
     *sirve para obtener el valor absoluto de un número real
     *facilita el proceso de impresión de polinomios
     */
-    private double abs(double  c){
-        if(c>0){
+    private BigInteger abs(BigInteger  c){
+        if(c.signum()==1){
             return c;
             }else{
-        return c*(-1);
+        return c.multiply(BigInteger.valueOf(-1));
         }
     }
         
@@ -224,8 +224,8 @@ public class Polynom extends DoubleList {
    *retorna falso si a no hace cero el polinomio (this)
    *retorna true si hace hace cero el polinomio (this)
    */    
-    public boolean esFactor(double a){
-          return evaluatePolynomAt(a)==0;
+    public boolean esFactor(BigInteger a){
+          return evaluatePolynomAt(a).equals(BigInteger.ZERO);
     }
   
     /*Este método se encarga de sumar dos polinomios
@@ -240,7 +240,7 @@ public class Polynom extends DoubleList {
            m = nt.getData();
            mp = np.getData();
            if(m.getExp()== mp.getExp()){
-               m.setCoef((m.getCoef()+mp.getCoef()));
+               m.setCoef((m.getCoef().add(mp.getCoef())));
                nt = nt.getRight();
                np = np.getRight();
            }
@@ -268,7 +268,7 @@ public class Polynom extends DoubleList {
     */
     private Polynom  smult(Monomio  t){
         int  et,ei,ek;
-        double  ct, ci, ck;
+        BigInteger  ct, ci, ck;
         Polynom  c;
         Monomio  ti, tk;
         DoubleNode  p;
@@ -281,7 +281,7 @@ public class Polynom extends DoubleList {
                 ti = p.getData();
                 ci = ti.getCoef();
                 ei = ti.getExp();
-                ck = ci * ct;
+                ck = ci.multiply(ct);
                 ek = ei + et;
                 tk = new Monomio(ck, ek);
                 c.insert(tk, c.lastNode());
@@ -315,7 +315,7 @@ public class Polynom extends DoubleList {
     *este metodo usa los métodos multiplicarPorEscalar() y sumar() para simplificar su implementación  
     */
     public void restar(Polynom p){
-        p.multiplicarPorEscalar(-1);
+        p.multiplicarPorEscalar((BigInteger.ONE).negate());
         sumar(p);
     }
     
@@ -326,13 +326,10 @@ public class Polynom extends DoubleList {
         
         DoubleNode x = firstNode();
         Monomio m;
-        Monomio n;
-        double c;
-        int e;
-                
+                      
         while(!isTheEnd(x)){              
             m =x.getData();
-            m.setCoef(m.getCoef()*m.getExp());
+            m.setCoef(m.getCoef().multiply(BigInteger.valueOf(m.getExp())));
             m.setExp(m.getExp()-1);
             x = x.getRight();
         }        
@@ -355,11 +352,11 @@ public class Polynom extends DoubleList {
     *no modifica el this
     *es usado por otros métodos de la clase polynom
     */
-    public Polynom multiplicarPorEscalar(double e){
+    public Polynom multiplicarPorEscalar(BigInteger e){
         
         DoubleNode x= firstNode();
         while(!isTheEnd(x)){
-            double n= x.getData().getCoef()*e;
+            BigInteger n= x.getData().getCoef().multiply(e);
             x.getData().setCoef(n);
             x=x.getRight();           
         }
@@ -368,12 +365,12 @@ public class Polynom extends DoubleList {
     
     
     //Método que evalúa el polinomio (this) que lo invoca, en un número real (double) x que entra como parámetro
-    public double evaluatePolynomAt(double x){
+    public BigInteger evaluatePolynomAt(BigInteger x){
         
-        DoubleNode y = this.firstNode();
-        double r=0;
-            while(!this.isTheEnd(y)){
-                r=r+((Math.pow(x, y.getData().getExp()))*(y.getData().getCoef()));
+        DoubleNode y = firstNode();
+        BigInteger r=BigInteger.ZERO;
+            while(!isTheEnd(y)){
+                r=r.add((x.pow(y.getData().getExp())).multiply((y.getData().getCoef())));
                 y=y.getRight();
             }
             return r;  
@@ -388,7 +385,7 @@ public class Polynom extends DoubleList {
         
         while (!isTheEnd(x)){
             int e = x.getData().getExp()+1;
-            double c = x.getData().getCoef()/e;
+            BigInteger c = x.getData().getCoef().divide(BigInteger.valueOf(e));
             m = new Monomio (c,e);
             r.insert(m, r.lastNode());
             x=x.getRight();
@@ -399,13 +396,13 @@ public class Polynom extends DoubleList {
     /*Método que obtiene la integral definida del polinomio que lo invoca (this)
     *evalúa la integral entre los límites de integración que entan como parámetro
     */
-    public double integrate(double a, double b){
+    public BigInteger integrate(BigInteger a, BigInteger b){
         DoubleNode x= firstNode();
-        double r = 0;
+        BigInteger r = BigInteger.ZERO;
         while (!this.isTheEnd(x)){
             int e = x.getData().getExp()+1;
-            double c = x.getData().getCoef()/e;
-            r = r+c*(Math.pow(b, e)-Math.pow(a, e)); 
+            BigInteger c = x.getData().getCoef().divide(BigInteger.valueOf(e));
+            r = r.add(c.multiply((b.pow(e).add((a.pow(e)).negate()))));   // r = r+c.*(Math.pow(b, e)-Math.pow(a, e)); 
             x=x.getRight();
         } 
         return r;    
@@ -422,7 +419,7 @@ public class Polynom extends DoubleList {
             delete(x);
             x=y;           
         }
-        Monomio m = new Monomio(0,0);
+        Monomio m = new Monomio(BigInteger.ZERO,0);
         insert(m, lastNode() );
     }    
 }
