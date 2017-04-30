@@ -5,7 +5,7 @@
 *Medellín
 *Version 1.0
 */
-package modelo;
+package Modelo.Listas;
 
 //Tomado del libro Algoritmia II, Roberto Florez - Editorial U de A
 //Para una documentación mas detallada, remitase al texto de referencia

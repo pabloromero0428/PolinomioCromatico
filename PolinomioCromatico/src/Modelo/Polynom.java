@@ -7,6 +7,9 @@
 */
 package modelo;
 
+import Modelo.Listas.Monomio;
+import Modelo.Listas.DoubleNode;
+import Modelo.Listas.DoubleList;
 import java.math.BigInteger;
 
  /*Polinomios: Listas doblemente ligadas con funciones extendidas 

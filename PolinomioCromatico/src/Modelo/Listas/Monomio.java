@@ -5,7 +5,7 @@
 *Medellín
 *Version 1.0
 */
-package modelo;
+package Modelo.Listas;
 import java.math.BigInteger;
 //Los nodeos de la clase Polynom tienen en su campo dato un Monomio
 public class Monomio{
@@ -41,8 +41,5 @@ public class Monomio{
 
     public void setExp(int exp) {
         this.exp = exp;
-    }
-     
-    
-    
+    }  
 }

@@ -1,11 +1,13 @@
 
-package Modelo;
+package Modelo.grafos;
+import Modelo.Archivo;
 import Modelo.Archivo;
 import java.io.File;
+import Modelo.Listas.SimpleNode;
 
 public class LinkedAdyListG {
     private int [] vec; // es un vector en teoría, pero si es un grafo con mucjhas aristas no se si sea bueno trabajar con un vector
-    private DoubleNode v;  // hay que implementar la lista simple??
+    private SimpleNode v;  // agregué la listas simples
     private Archivo archivo;
     private File file;
     
