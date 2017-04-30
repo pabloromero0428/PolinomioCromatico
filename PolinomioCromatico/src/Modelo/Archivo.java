@@ -13,7 +13,7 @@ public class Archivo {
     private File file;
     private JFileChooser fileC;
 
-//Método que obtiene con un buscador de archivos grafico (foilechooser) el archivo del grafo a trabajar    
+//Método que obtiene, con un buscador de archivos grafico (foilechooser), el archivo del grafo a trabajar    
     public void setFile(Component c) {
         fileC = new JFileChooser();
         fileC.showOpenDialog(c);

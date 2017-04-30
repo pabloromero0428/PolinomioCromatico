@@ -14,7 +14,7 @@ public class LinkedAdyListG {
     
     }
     
-    public void setFile(){ //obtiene el archivo donde está el grafo
+    public void setFile(){ // configura el archivo dfe donde se va a sacar el grafo
         file= archivo.getFile();  
     }  
 }
