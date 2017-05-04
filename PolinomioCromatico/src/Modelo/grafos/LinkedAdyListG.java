@@ -10,15 +10,18 @@ import Modelo.Listas.SimpleNode;
 public class LinkedAdyListG {
 
     private int[] vec; // es un vector en teoría, pero si es un grafo con mucjhas aristas no se si sea bueno trabajar con un vector
-    private SimpleNode v;  // agregué la listas simples
+    //private SimpleNode v;  // agregué la listas simples
     private Archivo archivo;
     private File file;
-    private DoubleNode M;
     int maxNodos;
     boolean dirigido; // Indica si es dirigido o no.
     int numVertices; // Número de vértices del grafo    
     SList listaAdy[];        // Vector de listas de adyacencias del grafo.
-
+    
+    public void setFile() { // configura el archivo dfe donde se va a sacar el grafo
+        file = archivo.getFile();
+    }
+    
     /**
      * Constructor vacio
      */
@@ -106,9 +109,6 @@ public class LinkedAdyListG {
         System.out.println("FIN");
     }
 
-    public void setFile() { // configura el archivo dfe donde se va a sacar el grafo
-        file = archivo.getFile();
-    }
 
     public static void main(String[] args) {
         System.out.println("");
