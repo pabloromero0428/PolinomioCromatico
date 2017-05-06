@@ -82,7 +82,7 @@ public class LinkedAdyListG extends SList {
             SimpleNode x = V[i];
             System.out.println("Vertice" + i);
             while (!isTheEnd(x)) {
-                System.out.println("Vertice" + x.getData());
+                System.out.println("Arista: "+ i+ " " + x.getData());
                 x = x.getLink();
             }
 
