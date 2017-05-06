@@ -17,41 +17,31 @@ Fin(grafoComoListasLigadasDeAdyacencia)
  */
 public class LinkedAdyListG extends SList {
 
-    private SimpleNode[] vec; // es un vector en teoría, pero si es un grafo con mucjhas aristas no se si sea bueno trabajar con un vector
+    //Atributos necesarios para leer el archivo y construir el grafo
     private Archivo archivo;
     private File file;
-    int maxNodos;
-    boolean dirigido; // Indica si es dirigido o no.
-    int numVertices; // Número de vértices del grafo    
-    //SList listaAdy[];        // Vector de listas de adyacencias del grafo.
 
-    public void setFile() { // configura el archivo dfe donde se va a sacar el grafo
-        file = archivo.getFile();
-    }
+    //Atributos propios del grafo
+    private SimpleNode[] vec; // es un vector en teoría, pero si es un grafo con mucjhas aristas no se si sea bueno trabajar con un vector
+    int numVertices; // Número de vértices del grafo  
+    //int maxNodos; PARA QUÉ???
+    //boolean dirigido; // Indica si es dirigido o no. // PARA QUE? ..... esta representación funciona para grafos dirigidos y nó dirigidos indistintamente
 
-    //constructor vacío
+    //constructor por defecto para grafo vacío
     public LinkedAdyListG() {// constructor vacio
-        //maxNodos = numVertices = 0;
+        this.vec = new SimpleNode[0];
+        numVertices = 0;
     }
 
-    /**
-     * Constructor que recibe como parametro la cantidad de vertices que tiene
-     * el grafo
-     *
-     * @param n
-     */
+    //Constructor que recibe como parametro la cantidad de vertices que tiene el grafo
     public LinkedAdyListG(int n) {
         //maxNodos = n;
         numVertices = n;
-        vec = new SimpleNode[n]; // de esta forma se agregan directamente los vertices necesarios al vector directamente
+        vec = new SimpleNode[n]; // de esta forma se agregan directamente los vertices necesarios al vector de nosod simple
     }
 
-    /**
-     * YA NO SERIA NECESARIO ESTE MÉTODO YA QUE LOS VERTICES, EN LA REPRESENTACIÓN ACTUAL SE AGREGAN AL VECTOR INMEDIATAMENTE
-     * Agrega los vertices al contructor
-     *
-     * @param n
-     */
+    //  YA NO SERIA NECESARIO ESTE MÉTODO PORQUE LOS VERTICES, EN LA REPRESENTACIÓN ACTUAL, SE AGREGAN AL VECTOR INMEDIATAMENTE EN EL COSTRUCTOR SIN MÉTODOS EXTERNOS
+    //Agrega los vertices al contructor
     /*public void insertaVertice(int n) {
         if (n > maxNodos - numVertices) {
             System.out.println("Error, se supera el número de nodos máximodel grafo\");\n");
@@ -63,12 +53,7 @@ public class LinkedAdyListG extends SList {
         }
         numVertices += n;
     }*/
-    /**
-     * Conecta los vertices
-     *
-     * @param i
-     * @param j
-     */
+    //Conecta vertices
     public void insertaArista(int i, int j) {
         if (i >= numVertices) {
             System.out.println("Error, no existe el vértice en el grafo");
@@ -88,7 +73,7 @@ public class LinkedAdyListG extends SList {
 //    }
     
     // Imprime el grafo como lista de adyacencia
-        public void imprimirGrafo() {
+    public void imprimirGrafo() {
         System.out.println("El grafo contiene " + numVertices + " vértices: \n");
 
         for (int i = 0; i < numVertices; i++) {
@@ -102,12 +87,7 @@ public class LinkedAdyListG extends SList {
         }
     }
 
-    /**
-     * Este metodo escribe los datos que se encuentran en la lista de cada
-     * espacio del vector
-     *
-     * @param lista
-     */
+    //PARA QUÉ SIRVE???     //Este metodo escribe los datos que se encuentran en la lista de cada espacio del vector
     static void escribir(SList lista) {
         SimpleNode aux;
         aux = lista.firstNode();
