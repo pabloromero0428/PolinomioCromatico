@@ -22,14 +22,12 @@ public class LinkedAdyListG extends SList {
     private File file;
 
     //Atributos propios del grafo
-    private SimpleNode[] vec; // es un vector en teoría, pero si es un grafo con mucjhas aristas no se si sea bueno trabajar con un vector
+    private SimpleNode[] V; // es un vector en teoría, pero si es un grafo con mucjhas aristas no se si sea bueno trabajar con un vector
     int numVertices; // Número de vértices del grafo  
-    //int maxNodos; PARA QUÉ???
-    //boolean dirigido; // Indica si es dirigido o no. // PARA QUE? ..... esta representación funciona para grafos dirigidos y nó dirigidos indistintamente
-
+        
     //constructor por defecto para grafo vacío
     public LinkedAdyListG() {// constructor vacio
-        this.vec = new SimpleNode[0];
+        this.V = new SimpleNode[0];
         numVertices = 0;
     }
 
@@ -37,7 +35,7 @@ public class LinkedAdyListG extends SList {
     public LinkedAdyListG(int n) {
         //maxNodos = n;
         numVertices = n;
-        vec = new SimpleNode[n]; // de esta forma se agregan directamente los vertices necesarios al vector de nosod simple
+        V = new SimpleNode[n]; // de esta forma se agregan directamente los vertices necesarios al vector de nosod simple
     }
 
     //  YA NO SERIA NECESARIO ESTE MÉTODO PORQUE LOS VERTICES, EN LA REPRESENTACIÓN ACTUAL, SE AGREGAN AL VECTOR INMEDIATAMENTE EN EL COSTRUCTOR SIN MÉTODOS EXTERNOS
@@ -54,12 +52,16 @@ public class LinkedAdyListG extends SList {
         numVertices += n;
     }*/
     //Conecta vertices
+    
     public void insertaArista(int i, int j) {
         if (i >= numVertices) {
             System.out.println("Error, no existe el vértice en el grafo");
         } else {
             SimpleNode x = new SimpleNode(j);
-            vec[i].setLink(x);
+            x.setLink(V[i]);
+            V[i]=x;         
+            
+            
         }
     }
 
@@ -77,8 +79,8 @@ public class LinkedAdyListG extends SList {
         System.out.println("El grafo contiene " + numVertices + " vértices: \n");
 
         for (int i = 0; i < numVertices; i++) {
-            SimpleNode x = vec[i];
-            System.out.println("Vertice" + vec[i]);
+            SimpleNode x = V[i];
+            System.out.println("Vertice" + i);
             while (!isTheEnd(x)) {
                 System.out.println("Vertice" + x.getData());
                 x = x.getLink();
@@ -99,6 +101,10 @@ public class LinkedAdyListG extends SList {
     }
 
     public static void main(String[] args) {
+        
+        LinkedAdyListG g = new LinkedAdyListG(5);
+        g.insertaArista(2, 3);
+        g.imprimirGrafo();
 
     }
 
