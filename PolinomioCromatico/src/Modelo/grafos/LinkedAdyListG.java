@@ -7,26 +7,31 @@ import Modelo.Listas.SList;
 import java.io.File;
 import Modelo.Listas.SimpleNode;
 
-public class LinkedAdyListG {
+/*
+*REPRESENTACIÓN SUGERIDA POR ROBERTO
+clase  grafoComoListasLigadasDeAdyacencia 
+	private
+		int  n			// n es el número de vértices del grafo
+		nodoSimple  V[]
+Fin(grafoComoListasLigadasDeAdyacencia)
+ */
+public class LinkedAdyListG extends SList {
 
-    private int[] vec; // es un vector en teoría, pero si es un grafo con mucjhas aristas no se si sea bueno trabajar con un vector
-    //private SimpleNode v;  // agregué la listas simples
+    private SimpleNode[] vec; // es un vector en teoría, pero si es un grafo con mucjhas aristas no se si sea bueno trabajar con un vector
     private Archivo archivo;
     private File file;
     int maxNodos;
     boolean dirigido; // Indica si es dirigido o no.
     int numVertices; // Número de vértices del grafo    
-    SList listaAdy[];        // Vector de listas de adyacencias del grafo.
-    
+    //SList listaAdy[];        // Vector de listas de adyacencias del grafo.
+
     public void setFile() { // configura el archivo dfe donde se va a sacar el grafo
         file = archivo.getFile();
     }
-    
-    /**
-     * Constructor vacio
-     */
+
+    //constructor vacío
     public LinkedAdyListG() {// constructor vacio
-        maxNodos = numVertices = 0;
+        //maxNodos = numVertices = 0;
     }
 
     /**
@@ -36,17 +41,18 @@ public class LinkedAdyListG {
      * @param n
      */
     public LinkedAdyListG(int n) {
-        maxNodos = n;
-        numVertices = 0;
-        listaAdy = new SList[n];
+        //maxNodos = n;
+        numVertices = n;
+        vec = new SimpleNode[n]; // de esta forma se agregan directamente los vertices necesarios al vector directamente
     }
 
     /**
+     * YA NO SERIA NECESARIO ESTE MÉTODO YA QUE LOS VERTICES, EN LA REPRESENTACIÓN ACTUAL SE AGREGAN AL VECTOR INMEDIATAMENTE
      * Agrega los vertices al contructor
      *
      * @param n
      */
-    public void insertaVertice(int n) {
+    /*public void insertaVertice(int n) {
         if (n > maxNodos - numVertices) {
             System.out.println("Error, se supera el número de nodos máximodel grafo\");\n");
 
@@ -56,8 +62,7 @@ public class LinkedAdyListG {
             }
         }
         numVertices += n;
-    }
-
+    }*/
     /**
      * Conecta los vertices
      *
@@ -68,8 +73,8 @@ public class LinkedAdyListG {
         if (i >= numVertices) {
             System.out.println("Error, no existe el vértice en el grafo");
         } else {
-            listaAdy[i].insert(j, null);
-            listaAdy[j].insert(i, null);
+            SimpleNode x = new SimpleNode(j);
+            vec[i].setLink(x);
         }
     }
 
@@ -81,15 +86,19 @@ public class LinkedAdyListG {
 //            
 //        }
 //    }
-    /**
-     * Imprime el grafo como lista de adyacencia
-     */
-    public void imprimirGrafo() {
-        System.out.println("Tamaño máximo del grafo: " + maxNodos + "\n");
+    
+    // Imprime el grafo como lista de adyacencia
+        public void imprimirGrafo() {
         System.out.println("El grafo contiene " + numVertices + " vértices: \n");
+
         for (int i = 0; i < numVertices; i++) {
-            System.out.println("vértice " + i + ": ");
-            escribir(listaAdy[i]);
+            SimpleNode x = vec[i];
+            System.out.println("Vertice" + vec[i]);
+            while (!isTheEnd(x)) {
+                System.out.println("Vertice" + x.getData());
+                x = x.getLink();
+            }
+
         }
     }
 
@@ -109,18 +118,7 @@ public class LinkedAdyListG {
         System.out.println("FIN");
     }
 
-
     public static void main(String[] args) {
-        System.out.println("");
-        LinkedAdyListG l = new LinkedAdyListG(4);
-        l.insertaVertice(0);
-        l.insertaVertice(1);
-        l.insertaVertice(2);
-        l.insertaArista(0, 1);
-        l.insertaArista(1, 2);
-        l.insertaArista(0, 2);
-
-        l.imprimirGrafo();
 
     }
 
