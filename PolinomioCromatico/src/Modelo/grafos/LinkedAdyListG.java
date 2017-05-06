@@ -38,21 +38,6 @@ public class LinkedAdyListG extends SList {
         V = new SimpleNode[n]; // de esta forma se agregan directamente los vertices necesarios al vector de nosod simple
     }
 
-    //  YA NO SERIA NECESARIO ESTE MÉTODO PORQUE LOS VERTICES, EN LA REPRESENTACIÓN ACTUAL, SE AGREGAN AL VECTOR INMEDIATAMENTE EN EL COSTRUCTOR SIN MÉTODOS EXTERNOS
-    //Agrega los vertices al contructor
-    /*public void insertaVertice(int n) {
-        if (n > maxNodos - numVertices) {
-            System.out.println("Error, se supera el número de nodos máximodel grafo\");\n");
-
-        } else {
-            for (int i = numVertices; i < numVertices + n; i++) {
-                listaAdy[i] = new SList();
-            }
-        }
-        numVertices += n;
-    }*/
-    //Conecta vertices
-    
     public void insertaArista(int i, int j) {
         if (i >= numVertices) {
             System.out.println("Error, no existe el vértice en el grafo");
@@ -88,17 +73,7 @@ public class LinkedAdyListG extends SList {
 
         }
     }
-
-    //PARA QUÉ SIRVE???     //Este metodo escribe los datos que se encuentran en la lista de cada espacio del vector
-    static void escribir(SList lista) {
-        SimpleNode aux;
-        aux = lista.firstNode();
-        while (aux != null) {
-            System.out.println(aux.getData());
-            aux = aux.getLink();
-        }
-        System.out.println("FIN");
-    }
+ 
 
     public static void main(String[] args) {
         
