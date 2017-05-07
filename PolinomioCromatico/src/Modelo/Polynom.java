@@ -312,45 +312,7 @@ public class Polynom extends DoubleList {
             }
         return  c;
     }     
-    
-   /*Este método se encarga de restar dos polinomios
-    * El polinomio (this) es restado con otro polinomio que entra como parametro
-    *este metodo usa los métodos multiplicarPorEscalar() y sumar() para simplificar su implementación  
-    */
-    public void restar(Polynom p){
-        p.multiplicarPorEscalar((BigInteger.ONE).negate());
-        sumar(p);
-    }
-    
-    /*Este método se encarga de obtener la derivada del polinomio que lo invoca
-    *modifica el this
-    */
-    public void derivate(){
-        
-        DoubleNode x = firstNode();
-        Monomio m;
-                      
-        while(!isTheEnd(x)){              
-            m =x.getData();
-            m.setCoef(m.getCoef().multiply(BigInteger.valueOf(m.getExp())));
-            m.setExp(m.getExp()-1);
-            x = x.getRight();
-        }        
-    }
-    
-    /*Este método se encarga de obtener la derivada n-esima del polinomio que lo invoca
-    *Modifica el this
-    *El parametro de entrada es el numero de derivadas 
-    */
-    public Polynom derivate(int n){
-        int i=0;
-        while(i<n){              
-            derivate();
-            i++;
-        }
-            return this;
-    }
-    
+            
     /*Método que multiplica a un polinomio por un escalar real (double)
     *no modifica el this
     *es usado por otros métodos de la clase polynom
@@ -365,8 +327,7 @@ public class Polynom extends DoubleList {
         }
         return this;
     }
-    
-    
+        
     //Método que evalúa el polinomio (this) que lo invoca, en un número real (double) x que entra como parámetro
     public BigInteger evaluatePolynomAt(BigInteger x){
         
@@ -378,39 +339,7 @@ public class Polynom extends DoubleList {
             }
             return r;  
     }
-    
-    //Método que que obtiene la integral indefinida del polinomio que lo invoca (this)
-    public Polynom integrate(){
-        
-        DoubleNode x= firstNode();
-        Monomio m;
-        Polynom r= new Polynom();
-        
-        while (!isTheEnd(x)){
-            int e = x.getData().getExp()+1;
-            BigInteger c = x.getData().getCoef().divide(BigInteger.valueOf(e));
-            m = new Monomio (c,e);
-            r.insert(m, r.lastNode());
-            x=x.getRight();
-        }    
-        return r;
-    }
-    
-    /*Método que obtiene la integral definida del polinomio que lo invoca (this)
-    *evalúa la integral entre los límites de integración que entan como parámetro
-    */
-    public BigInteger integrate(BigInteger a, BigInteger b){
-        DoubleNode x= firstNode();
-        BigInteger r = BigInteger.ZERO;
-        while (!this.isTheEnd(x)){
-            int e = x.getData().getExp()+1;
-            BigInteger c = x.getData().getCoef().divide(BigInteger.valueOf(e));
-            r = r.add(c.multiply((b.pow(e).add((a.pow(e)).negate()))));   // r = r+c.*(Math.pow(b, e)-Math.pow(a, e)); 
-            x=x.getRight();
-        } 
-        return r;    
-    }
-    
+             
     /*Método que elimina el polinomio (this) que lo invoca
     *borra el polinomio nodo a nodo y devuelve el polinomio nulo
     */
