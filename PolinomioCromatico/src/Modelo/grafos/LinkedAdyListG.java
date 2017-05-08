@@ -6,17 +6,23 @@ import Modelo.Listas.DoubleNode;
 import Modelo.Listas.SList;
 import java.io.File;
 import Modelo.Listas.SimpleNode;
+import java.awt.Component;
+import java.awt.FlowLayout;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.StringTokenizer;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class LinkedAdyListG {
 
     private int[] vec; // es un vector en teoría, pero si es un grafo con mucjhas aristas no se si sea bueno trabajar con un vector
     private SimpleNode v;  // agregué la listas simples
     private Archivo archivo;
-    private File file;
+    private File file;     
+    private JFileChooser fileC;
 
     public void setFile() { // configura el archivo dfe donde se va a sacar el grafo
         file = archivo.getFile();
@@ -34,7 +40,7 @@ public class LinkedAdyListG {
      * @param direccion
      * @param n
      */
-    public LinkedAdyListG(String direccion) {
+    public LinkedAdyListG(File direccion) {
         try {
             FileReader fr = new FileReader(direccion);
             BufferedReader br = new BufferedReader(fr);
@@ -101,15 +107,17 @@ public class LinkedAdyListG {
         if (i >= numVertices) {
             System.out.println("Error, no existe el vértice en el grafo");
         } else {
-            listaAdy[i + 1].insert(j, null);
-            listaAdy[j + 1].insert(i, null);
+            listaAdy[i].insert(j, null);
+            listaAdy[j].insert(i, null);
         }
     }
 
     /**
-     * Eliminia la arista v1,v2 de la lista de adyasencia, eliminando los nodos del vector en la posicion v1, y posicion v2.
+     * Eliminia la arista v1,v2 de la lista de adyasencia, eliminando los nodos
+     * del vector en la posicion v1, y posicion v2.
+     *
      * @param v1
-     * @param v2 
+     * @param v2
      */
     public void eliminaArista(int v1, int v2) {
         if (v2 > numVertices && v1 > numVertices) {
@@ -133,7 +141,7 @@ public class LinkedAdyListG {
                 }
             }
 
-             while (y != null) {
+            while (y != null) {
                 if (ver2 == v1) {
                     listaAdy[v2].disconnect(y, previov2);
                     y = null;
@@ -164,11 +172,50 @@ public class LinkedAdyListG {
         }
     }
 
+    public String abrirArchivo(Component c) {
+        String aux = "";
+        String texto = "";
+        try {
+            /**
+             * llamamos el metodo que permite cargar la ventana
+             */
+            JFileChooser file = new JFileChooser();
+            fileC.showOpenDialog(c);
+            /**
+             * abrimos el archivo seleccionado
+             */
+            File abre = file.getSelectedFile();
+
+            /**
+             * recorremos el archivo, lo leemos para plasmarlo en el area de texto
+             */
+            if (abre != null) {
+                FileReader archivos = new FileReader(abre);
+                BufferedReader lee = new BufferedReader(archivos);
+                while ((aux = lee.readLine()) != null) {
+                    texto += aux + "\n";
+                }
+                lee.close();
+            }
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, ex + ""
+                    + "\nNo se ha encontrado el archivo",
+                    "ADVERTENCIA!!!", JOptionPane.WARNING_MESSAGE);
+        }
+        return texto;//El texto se almacena en el JTextArea
+    }
+
+    
     public static void main(String[] args) {
-        System.out.println("");
-        String a = "a";
-        LinkedAdyListG l = new LinkedAdyListG("C:\\Users\\JuanPablo\\Desktop\\Nueva carpeta\\Grafo.txt");
-        l.eliminaArista(1, 2);
+       
+        JFrame j = new JFrame();
+        JFrame.setDefaultLookAndFeelDecorated(true);
+        j.setLayout(new FlowLayout());
+        j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Archivo a = new Archivo();
+        a.setFile(j);
+        File f = a.getFile();
+        LinkedAdyListG l = new LinkedAdyListG(f);  
         l.imprimirGrafo();
 
     }
