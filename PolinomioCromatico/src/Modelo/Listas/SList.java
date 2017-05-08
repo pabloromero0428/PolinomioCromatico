@@ -89,7 +89,7 @@ public class SList {
         disconnect(x,y);
     }
 
-    private void disconnect(SimpleNode x, SimpleNode y) {
+    public void disconnect(SimpleNode x, SimpleNode y) {
         if (x!=first) {
             y.setLink(x.getLink());
             if (x==last) {
