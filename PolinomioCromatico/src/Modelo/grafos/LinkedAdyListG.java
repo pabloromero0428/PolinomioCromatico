@@ -6,7 +6,6 @@ import Modelo.Listas.DoubleNode;
 import Modelo.Listas.SList;
 import java.io.File;
 import Modelo.Listas.SimpleNode;
-import java.awt.Component;
 import java.awt.FlowLayout;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -14,7 +13,7 @@ import java.io.IOException;
 import java.util.StringTokenizer;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+
 
 public class LinkedAdyListG {
 
@@ -32,10 +31,10 @@ public class LinkedAdyListG {
     boolean dirigido; // Indica si es dirigido o no.
     int numVertices; // Número de vértices del grafo    
     SList listaAdy[];        // Vector de listas de adyacencias del grafo.
-
+    int ver;
+    int arist;
     /**
-     * Constructor que recibe como parametro la cantidad de vertices que tiene
-     * el grafo
+     * Constructor que recibe como parametro un archivo para la creacion del grafo
      *
      * @param direccion
      * @param n
@@ -59,8 +58,8 @@ public class LinkedAdyListG {
 
                         String T = tipo;
                         String comentar = comentario;
-                        int ver = Integer.parseInt(vertices);
-                        int arist = Integer.parseInt(aristas);
+                        ver = Integer.parseInt(vertices);
+                        arist = Integer.parseInt(aristas);
                         numVertices = ver;
                         listaAdy = new SList[numVertices + 1];
                         for (int i = 1; i < numVertices + 1; i++) {
@@ -153,6 +152,21 @@ public class LinkedAdyListG {
             }
         }
     }
+    /**
+     * Este metodo determina si el grafo denso o no, si es denso el resultado de la operacion alojada debe se >= que 1 de lo contrario es menos denso
+     * @param n
+     * @param m
+     * @return 
+     */
+    boolean isDenso (int n, int m){
+        boolean esDenso = false;
+        int resultado = (2*m)/n*(n-1);
+        if(resultado >= 1 ){
+            esDenso = true;
+        }
+        return(esDenso);
+    }
+    
 
     /**
      * Imprime el grafo como lista de adyacencia
@@ -171,40 +185,6 @@ public class LinkedAdyListG {
             System.out.println("FIN");
         }
     }
-
-    public String abrirArchivo(Component c) {
-        String aux = "";
-        String texto = "";
-        try {
-            /**
-             * llamamos el metodo que permite cargar la ventana
-             */
-            JFileChooser file = new JFileChooser();
-            fileC.showOpenDialog(c);
-            /**
-             * abrimos el archivo seleccionado
-             */
-            File abre = file.getSelectedFile();
-
-            /**
-             * recorremos el archivo, lo leemos para plasmarlo en el area de texto
-             */
-            if (abre != null) {
-                FileReader archivos = new FileReader(abre);
-                BufferedReader lee = new BufferedReader(archivos);
-                while ((aux = lee.readLine()) != null) {
-                    texto += aux + "\n";
-                }
-                lee.close();
-            }
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, ex + ""
-                    + "\nNo se ha encontrado el archivo",
-                    "ADVERTENCIA!!!", JOptionPane.WARNING_MESSAGE);
-        }
-        return texto;//El texto se almacena en el JTextArea
-    }
-
     
     public static void main(String[] args) {
        
