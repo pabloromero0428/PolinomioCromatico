@@ -14,27 +14,27 @@ import java.util.StringTokenizer;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
-
 public class LinkedAdyListG {
 
     private int[] vec; // es un vector en teoría, pero si es un grafo con mucjhas aristas no se si sea bueno trabajar con un vector
     private SimpleNode v;  // agregué la listas simples
     private Archivo archivo;
-    private File file;     
+    private File file;
     private JFileChooser fileC;
 
     public void setFile() { // configura el archivo dfe donde se va a sacar el grafo
         file = archivo.getFile();
     }
-    private DoubleNode M;
-    int maxNodos;
+    
     boolean dirigido; // Indica si es dirigido o no.
     int numVertices; // Número de vértices del grafo    
     SList listaAdy[];        // Vector de listas de adyacencias del grafo.
     int ver;
     int arist;
+
     /**
-     * Constructor que recibe como parametro un archivo para la creacion del grafo
+     * Constructor que recibe como parametro un archivo para la creacion del
+     * grafo
      *
      * @param direccion
      * @param n
@@ -76,15 +76,25 @@ public class LinkedAdyListG {
                         if (ver1 + 1 >= numVertices + 1) {
                             System.out.println("Error, no existe el vértice en el grafo");
                         } else {
-                            listaAdy[ver1].insert(ver2, null);
-                            listaAdy[ver2].insert(ver1, null);
+                            boolean existe = false;
+                            SimpleNode x = listaAdy[ver1].firstNode();
+                            while (x != null) {
+                                if (x.getData().equals(ver2)) {
+                                    x = null;
+                                    existe = true;
+                                } else {
+                                    x = x.getLink();
+                                }
 
+                            }
+                            if (existe == false) {
+                                listaAdy[ver1].insert(ver2, null);
+                                listaAdy[ver2].insert(ver1, null);
+
+                            }
                         }
-
                     }
-
                 }
-
             }
 
             fr.close();
@@ -103,11 +113,27 @@ public class LinkedAdyListG {
      * @param j
      */
     public void insertaArista(int i, int j) {
+        boolean existe = false;
         if (i >= numVertices) {
             System.out.println("Error, no existe el vértice en el grafo");
         } else {
-            listaAdy[i].insert(j, null);
-            listaAdy[j].insert(i, null);
+            SimpleNode x = listaAdy[i].firstNode();
+            while (x != null) {
+                if (x.getData().equals(j)) {
+                    x = null;
+                    existe = true;
+                } else {
+                    x = x.getLink();
+                }
+
+            }
+            if (existe == false) {
+                listaAdy[i].insert(j, null);
+                listaAdy[j].insert(i, null);
+            } else {
+                System.out.println("La arsita" + i + "," + j + " ya existe");
+            }
+
         }
     }
 
@@ -152,27 +178,55 @@ public class LinkedAdyListG {
             }
         }
     }
+
     /**
-     * Este metodo determina si el grafo denso o no, si es denso el resultado de la operacion alojada debe se >= que 1 de lo contrario es menos denso
+     * Este metodo determina si el grafo denso o no, si es denso el resultado de
+     * la operacion alojada debe se >= que 1 de lo contrario es menos denso
+     *
      * @param n
      * @param m
-     * @return 
+     * @return
      */
-    boolean isDenso (int n, int m){
+    boolean isDenso(int n, int m) {
         boolean esDenso = false;
-        int resultado = (2*m)/n*(n-1);
-        if(resultado >= 1 ){
+        int resultado = (2 * m) / n * (n - 1);
+        if (resultado >= 1) {
             esDenso = true;
         }
-        return(esDenso);
+        return (esDenso);
     }
-    
+
+    boolean completo() {
+        boolean escompleto = true;
+        int contador;
+        for (int i = 1; i < ver; i++) {
+            SimpleNode x = listaAdy[i].firstNode();
+            contador = 0;
+            while (x != null) {
+                if (x.getData().equals(i)) {
+                    x = x.getLink();
+                } else {
+                    contador = contador + 1;
+                    x = x.getLink();
+                }
+
+            }
+            if (contador != ver - 1) {
+                escompleto = false;
+                System.out.println("no es completo");
+                return (escompleto);
+
+            }
+
+        }
+        return (escompleto);
+    }
 
     /**
      * Imprime el grafo como lista de adyacencia
      */
     public void imprimirGrafo() {
-        System.out.println("Tamaño máximo del grafo: " + maxNodos + "\n");
+        
         System.out.println("El grafo contiene " + numVertices + " vértices: \n");
         for (int i = 1; i < numVertices + 1; i++) {
             System.out.println("vértice " + i + ": ");
@@ -185,9 +239,9 @@ public class LinkedAdyListG {
             System.out.println("FIN");
         }
     }
-    
+
     public static void main(String[] args) {
-       
+
         JFrame j = new JFrame();
         JFrame.setDefaultLookAndFeelDecorated(true);
         j.setLayout(new FlowLayout());
@@ -195,7 +249,11 @@ public class LinkedAdyListG {
         Archivo a = new Archivo();
         a.setFile(j);
         File f = a.getFile();
-        LinkedAdyListG l = new LinkedAdyListG(f);  
+        LinkedAdyListG l = new LinkedAdyListG(f);
+        l.completo();
+        l.imprimirGrafo();
+        l.insertaArista(1, 8);
+        System.out.println("-------");
         l.imprimirGrafo();
 
     }
