@@ -240,7 +240,7 @@ public class LinkedAdyListG {
         }
     }
 
-    public static void main(String[] args) {
+   /* public static void main(String[] args) {
 
         JFrame j = new JFrame();
         JFrame.setDefaultLookAndFeelDecorated(true);
@@ -256,5 +256,5 @@ public class LinkedAdyListG {
         System.out.println("-------");
         l.imprimirGrafo();
 
-    }
+    }*/
 }

@@ -310,6 +310,7 @@ public class Polynom extends DoubleList {
                 c.sumar(aux);
                 p = p.getRight();
             }
+            c.simplificar();
         return  c;
     }     
     
