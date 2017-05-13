@@ -1,14 +1,14 @@
 package Modelo;
-import modelo.Polynom;
 import Modelo.grafos.LinkedAdyListG;
 import java.awt.Component;
 import java.io.File;
 import java.util.LinkedList;
 import javax.swing.JFileChooser;
+import modelo.Polynom;
 
-public class PolyC extends Polynom{
+public class PolyC{
     private LinkedAdyListG grafo;
-         
+    private Polynom polynom;         
 
     //Contructor del polinomio G
     public PolyC(){
@@ -16,11 +16,10 @@ public class PolyC extends Polynom{
         
     
     } 
-    
+    //prueba
     public Polynom calcularPoly(){
-    
-        
-    return  null;
+  
+       return  (new Polynom());
     }
 
     public void setGrafo(File file) {
