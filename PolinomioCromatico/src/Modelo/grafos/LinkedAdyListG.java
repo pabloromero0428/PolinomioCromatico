@@ -25,7 +25,7 @@ public class LinkedAdyListG {
     public void setFile() { // configura el archivo dfe donde se va a sacar el grafo
         file = archivo.getFile();
     }
-    
+
     boolean dirigido; // Indica si es dirigido o no.
     int numVertices; // Número de vértices del grafo    
     SList listaAdy[];        // Vector de listas de adyacencias del grafo.
@@ -56,7 +56,6 @@ public class LinkedAdyListG {
                         String vertices = st.nextToken();
                         String aristas = st.nextToken();
 
-                        String T = tipo;
                         String comentar = comentario;
                         ver = Integer.parseInt(vertices);
                         arist = Integer.parseInt(aristas);
@@ -73,6 +72,7 @@ public class LinkedAdyListG {
                         String v2 = st.nextToken();
                         int ver1 = Integer.parseInt(v1);
                         int ver2 = Integer.parseInt(v2);
+
                         if (ver1 + 1 >= numVertices + 1) {
                             System.out.println("Error, no existe el vértice en el grafo");
                         } else {
@@ -94,6 +94,7 @@ public class LinkedAdyListG {
                             }
                         }
                     }
+
                 }
             }
 
@@ -195,7 +196,10 @@ public class LinkedAdyListG {
         }
         return (esDenso);
     }
-
+/**
+ * 
+ * @return 
+ */
     boolean completo() {
         boolean escompleto = true;
         int contador;
@@ -226,7 +230,7 @@ public class LinkedAdyListG {
      * Imprime el grafo como lista de adyacencia
      */
     public void imprimirGrafo() {
-        
+
         System.out.println("El grafo contiene " + numVertices + " vértices: \n");
         for (int i = 1; i < numVertices + 1; i++) {
             System.out.println("vértice " + i + ": ");
@@ -239,8 +243,20 @@ public class LinkedAdyListG {
             System.out.println("FIN");
         }
     }
+    
+    public boolean lineal(){        
+        for (int i = 1; i < ver; i++) {
+            SimpleNode x = listaAdy[i].firstNode();            
+            if(x != null)
+            {
+                return (false);
+            }
 
-   /* public static void main(String[] args) {
+        }
+        return (true);
+    }
+
+    public static void main(String[] args) {
 
         JFrame j = new JFrame();
         JFrame.setDefaultLookAndFeelDecorated(true);
@@ -251,10 +267,10 @@ public class LinkedAdyListG {
         File f = a.getFile();
         LinkedAdyListG l = new LinkedAdyListG(f);
         l.completo();
-        l.imprimirGrafo();
-        l.insertaArista(1, 8);
+        System.out.println("--------------");
+        l.imprimirGrafo();       
         System.out.println("-------");
-        l.imprimirGrafo();
+      
 
-    }*/
+    }
 }
