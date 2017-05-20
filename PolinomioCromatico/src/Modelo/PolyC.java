@@ -7,7 +7,7 @@ public class PolyC{
     private Polynom polynom;         
 
         
-    public Polynom calcularPoly(LinkedAdyListG g) {
+    public Polynom calcularPoly(LinkedAdyListG g) {  //P(G)
 
         boolean continuar = true;
         // caso base grafo completo
@@ -20,15 +20,19 @@ public class PolyC{
             continuar = false;
             return g.calcularDisperso();
         }
-/*
+
         if (continuar) {
-            if (g.isDenso()) {
-                polynom = calcularPoly(g.AgreararistaGrafo()).sumar(calcularPoly(g.fusionarArista(g.getActualv1(),g.getActualv2())));
-            } else {
-                polynom = calcularPoly(g.quitararistaGrafo()).sumar(calcularPoly(g.fusionarArista(g.getActualv1(),g.getActualv2()))));
+            if (g.isDenso()) { //P(G) = P(G+e) + P(G/e)                
+                Polynom p= calcularPoly(g.AgreararistaGrafo());
+                Polynom q =(calcularPoly(g.fusionarArista(g.getActualv1(),g.getActualv2())));                
+                //polynom = p.sumar(q);                
+                
+            } else {//P(G) = P(G-e) - P(G/e)                        
+                Polynom p= calcularPoly(g.quitararistaGrafo());
+                Polynom q =(calcularPoly(g.fusionarArista(g.getActualv1(),g.getActualv2())));                
+                //polynom = p.restar(q);
             }
         }
-*/
         return polynom;
     } 
 }
