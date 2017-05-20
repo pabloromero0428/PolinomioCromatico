@@ -48,7 +48,7 @@ public class SList {
     
     //Aqui va recorre
     
-    public void insert(Object d, SimpleNode y){
+    public void insert(int d, SimpleNode y){
         SimpleNode x;
         x= new SimpleNode(d);
         connect(x,y);
@@ -71,7 +71,7 @@ public class SList {
         }
     }
     
-    public SimpleNode findData(Object d, SimpleNode y){
+   /* public SimpleNode findData(Object d, SimpleNode y){
         SimpleNode x;
         x=firstNode();
         y=previousNode(x);
@@ -81,7 +81,7 @@ public class SList {
         }
         return x;
     }
-    
+    */
     public void delete(SimpleNode x, SimpleNode y){
         if (x==null) {
             return;

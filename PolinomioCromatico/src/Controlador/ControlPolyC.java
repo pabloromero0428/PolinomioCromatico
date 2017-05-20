@@ -2,23 +2,26 @@ package Controlador;
 import Modelo.PolyC;
 import Modelo.grafos.LinkedAdyListG;
 import java.io.File;
+import java.io.IOException;
 import modelo.Polynom;
+
+
 
 public class ControlPolyC {
     PolyC  polyC;
     LinkedAdyListG grafo;
     Polynom polynom;
     
-    public void costruirGrafo(File file) {
+    public void costruirGrafo(File file) throws IOException {
         
-        polyC = new PolyC();
-        polyC.setGrafo(file);       
+       grafo = new LinkedAdyListG(file);
+              
    
     }
 
     public void calcularPolinomioCromatico() {
         
-        //polynom = polyC.calcularPoly();
+        polynom = polyC.calcularPoly(grafo);
         
     
     }

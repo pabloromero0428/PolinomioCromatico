@@ -3,8 +3,8 @@ package Vista;
 import Controlador.ControlPolyC;
 import java.awt.FlowLayout;
 import java.io.File;
+import java.io.IOException;
 import java.util.NoSuchElementException;
-import javafx.stage.FileChooser;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -18,7 +18,7 @@ public class ViewPolyC extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
-        
+
         control = new ControlPolyC();
 
     }
@@ -90,13 +90,18 @@ public class ViewPolyC extends javax.swing.JFrame {
 
     private void cargarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargarButtonActionPerformed
         getFile();
-        try{
-        control.costruirGrafo(file);
-        control.calcularPolinomioCromatico();
-        control.calcularCPU();
-        control.guardarResultados(getPath());
-        }catch (NoSuchElementException e){
+        try {
+            control.costruirGrafo(file);
+            control.calcularPolinomioCromatico();
+            control.calcularCPU();
+            control.guardarResultados(getPath());
+            
+        } catch (NoSuchElementException e) {
             JOptionPane.showMessageDialog(null, "No es un archivo valido");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "El archivo tiene un grafo mal formado");
+        } catch (NullPointerException x){
+            JOptionPane.showMessageDialog(null, "No se cargó ningún archivo, intentelo de nuevo");
         }
 
         // TODO add your handling code here:
@@ -106,7 +111,7 @@ public class ViewPolyC extends javax.swing.JFrame {
 
         JFrame j = new JFrame();
         JFrame.setDefaultLookAndFeelDecorated(true);
-        
+
         j.setLocationRelativeTo(null);
         j.setResizable(false);
         j.setLayout(new FlowLayout());
@@ -149,10 +154,8 @@ public class ViewPolyC extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ViewPolyC().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new ViewPolyC().setVisible(true);
         });
     }
 

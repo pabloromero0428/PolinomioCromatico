@@ -3,19 +3,19 @@ package Modelo.Listas;
 
 public class SimpleNode {
 
-    private Object data;
+    private int data;
     private SimpleNode link;
 
-    public SimpleNode(Object d) {
+    public SimpleNode(int d) {
         this.link= null;
         this.data=d;
     }
 
-    public Object getData() {
+    public int getData() {
         return data;
     }
 
-    public void setData(Object data) {
+    public void setData(int data) {
         this.data = data;
     }
 
