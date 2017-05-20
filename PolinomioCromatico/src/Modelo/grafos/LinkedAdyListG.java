@@ -1,16 +1,16 @@
 package Modelo.grafos;
 
-import Modelo.Listas.DoubleNode;
+import Modelo.Listas.Monomio;
 import Modelo.Listas.SList;
 import java.io.File;
 import Modelo.Listas.SimpleNode;
-import com.sun.javafx.geom.Vec2d;
-import java.awt.FlowLayout;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.StringTokenizer;
+import modelo.Polynom;
+import sun.net.www.content.audio.x_aiff;
 
 public class LinkedAdyListG {
 
@@ -26,8 +26,8 @@ public class LinkedAdyListG {
     public LinkedAdyListG(SList v[], boolean activos[]) {
         this.vec = v;
         this.activo = activos;
+        activos[0]=true;
         //this.numVertices = v.length - 1;
-
     }
 
     public LinkedAdyListG(File direccion) throws FileNotFoundException, IOException {
@@ -87,7 +87,6 @@ public class LinkedAdyListG {
         fr.close();
         br.close();
     }
-
     /**
      * Conecta los vertices
      *
@@ -107,7 +106,6 @@ public class LinkedAdyListG {
                 } else {
                     x = x.getLink();
                 }
-
             }
             if (existe == false) {
                 vec[i].insert(j, null);
@@ -115,7 +113,6 @@ public class LinkedAdyListG {
             } else {
                 System.out.println("La arsita" + i + "," + j + " ya existe");
             }
-
         }
     }
 
@@ -180,8 +177,7 @@ public class LinkedAdyListG {
                     arist = arist + 1;
                     return (g);
                 }
-            }
-        
+            }        
         return (null);
 
     }
@@ -229,12 +225,13 @@ public class LinkedAdyListG {
         }
     }
 
-    public LinkedAdyListG fusionarArista() {
+    public LinkedAdyListG fusionarArista(int i, int j) {
         // variables que se obtienen al seleccionar una arista a borrar, estas variables se obtienen por fuera del método     
-        int i = 3; //selecVertceABorrar();  // vector con mas aristas 
-        int j = 5; //  el otro vértice de la arista
+        //int i = 3; //selecVertceABorrar();  // vector con mas aristas 
+        //int j = 5; //  el otro vértice de la arista
 
         boolean[] activoA = new boolean[vec.length]; // controla si el vertice está borrado o está sin conexiones falso si no está activo, verdadero si es un vértice solo
+        activoA[0]=true;
         int d;                                      // recoge el dato del nodo actual
         SList[] v = new SList[vec.length];
 
@@ -348,6 +345,8 @@ public class LinkedAdyListG {
         }
         return (true);
     }
+    
+    
 
     public static void main(String[] args) {
         /*
@@ -366,5 +365,50 @@ public class LinkedAdyListG {
       
          */
 
+    }
+
+    public int getActualv1() {
+        return actualv1;
+    }
+
+    public int getActualv2() {
+        return actualv2;
+    }
+    
+    public boolean isDisperso() {
+        
+        SList s;
+        boolean disperso = true;
+        
+        for(int i=1;i<=vec.length; i++){
+            s= vec[i];            
+            if(!s.isEmpty()){
+                disperso=false;            
+            }  
+        }
+        return disperso;      
+    }
+
+    public Polynom calcularDisperso() {
+       int n = numVertices;
+       //int n = (vec.length-1);
+       Polynom p = new Polynom("x"+n);
+       
+       return p;       
+    }
+
+    public Polynom calcularCompleto() {
+        
+        Polynom p= new Polynom();
+        Monomio m = new Monomio();
+        String s;
+        
+        for (int i = 0; i < numVertices; i++) {
+            
+            s= "x-"+i;
+            Polynom q = new Polynom(s);
+            p=p.multiplicar(q);
+        }
+        return p;       
     }
 }
