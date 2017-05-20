@@ -20,15 +20,7 @@ public class LinkedAdyListG {
     private int arist;
     private boolean[] activo;
 
-    /**
-     * Constructor que recibe como parametro un archivo para la creacion del
-     * grafo
-     *
-     * @param direccion
-     * @param n
-     * @throws java.io.FileNotFoundException
-     */
-     
+
     //Constructor que recibe un vector de listas por parámetro y el vector de activos
     public LinkedAdyListG(SList v[], boolean activos[]) {
         this.vec = v;
@@ -98,24 +90,25 @@ public class LinkedAdyListG {
    
 
     /**
-     * Conecta los vertices
-     *
-     * @param i
-     * @param j
-     */
-    public void insertaArista(int i, int j) {
+ * Conecta los vertices
+ *
+ * @param i
+ * @param j
+ */
+public void insertaArista(int i, int j) {
         boolean existe = false;
         if (i >= numVertices) {
             System.out.println("Error, no existe el vértice en el grafo");
         } else {
             SimpleNode x = vec[i].firstNode();
             while (x != null) {
-                if (x.getData() == (j)) {
+                if (x.getData() == j) {
                     x = null;
                     existe = true;
                 } else {
                     x = x.getLink();
                 }
+
             }
             if (existe == false) {
                 vec[i].insert(j, null);
@@ -123,9 +116,48 @@ public class LinkedAdyListG {
             } else {
                 System.out.println("La arsita" + i + "," + j + " ya existe");
             }
+
         }
     }
 
+    public void AgreararistaGrafo() {
+        boolean existe = false;
+        for (int i = 1; i < numVertices; i++) {
+
+            for (int j = 1; j < numVertices; j++) {
+                existe = false;
+                SimpleNode x = vec[i].firstNode();
+                while (x != null) {
+                    if (j == i) {
+                        existe = true;
+                        x = null;
+                        break;
+
+                    }
+                    if (x.getData() == j) {
+                        x = null;
+                        existe = true;
+                        break;
+
+                    } else {
+                        break;
+                    }
+
+                }
+                if (existe == false) {
+                    insertaArista(i, j);
+                    arist = arist + 1;
+                    LinkedAdyListG l = new LinkedAdyListG(f);
+                    break;
+                }
+            }
+            if (existe == false) {
+                break;
+
+            }
+
+        }
+    }
     /**
      * Eliminia la arista v1,v2 de la lista de adyasencia, eliminando los nodos
      * del vector en la posicion v1, y posicion v2.
