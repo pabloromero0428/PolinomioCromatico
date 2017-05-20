@@ -147,7 +147,7 @@ public void insertaArista(int i, int j) {
                 if (existe == false) {
                     insertaArista(i, j);
                     arist = arist + 1;
-                    LinkedAdyListG l = new LinkedAdyListG(f);
+                  
                     break;
                 }
             }
