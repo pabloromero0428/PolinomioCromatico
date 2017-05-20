@@ -19,7 +19,8 @@ public class LinkedAdyListG {
     private int ver;
     private int arist;
     private boolean[] activo;
-
+    private int actualv1;
+    private int actualv2;
 
     //Constructor que recibe un vector de listas por parámetro y el vector de activos
     public LinkedAdyListG(SList v[], boolean activos[]) {
@@ -28,7 +29,7 @@ public class LinkedAdyListG {
         //this.numVertices = v.length - 1;
 
     }
-    
+
     public LinkedAdyListG(File direccion) throws FileNotFoundException, IOException {
 
         FileReader fr = new FileReader(direccion);
@@ -87,15 +88,13 @@ public class LinkedAdyListG {
         br.close();
     }
 
-   
-
     /**
- * Conecta los vertices
- *
- * @param i
- * @param j
- */
-public void insertaArista(int i, int j) {
+     * Conecta los vertices
+     *
+     * @param i
+     * @param j
+     */
+    public void insertaArista(int i, int j) {
         boolean existe = false;
         if (i >= numVertices) {
             System.out.println("Error, no existe el vértice en el grafo");
@@ -120,10 +119,9 @@ public void insertaArista(int i, int j) {
         }
     }
 
-    public void AgreararistaGrafo() {
+    public LinkedAdyListG AgreararistaGrafo() {
         boolean existe = false;
         for (int i = 1; i < numVertices; i++) {
-
             for (int j = 1; j < numVertices; j++) {
                 existe = false;
                 SimpleNode x = vec[i].firstNode();
@@ -132,7 +130,6 @@ public void insertaArista(int i, int j) {
                         existe = true;
                         x = null;
                         break;
-
                     }
                     if (x.getData() == j) {
                         x = null;
@@ -145,19 +142,51 @@ public void insertaArista(int i, int j) {
 
                 }
                 if (existe == false) {
-                    insertaArista(i, j);
+                    actualv1 = i;
+                    actualv2 = j;
+                    SList[] v = new SList[vec.length];
+                    boolean[] activoA = new boolean[vec.length];
+                    for (int p = 1; p < vec.length + 1; p++) {
+                        SList l[] = new SList[vec.length];
+                        l[p] = vec[p];
+                    }
+                    LinkedAdyListG g = new LinkedAdyListG(v, activoA);
+                    g.insertaArista(i, j);
                     arist = arist + 1;
-                  
-                    break;
+                    return (g);
                 }
             }
-            if (existe == false) {
-                break;
-
-            }
-
         }
+        return (null);
+
     }
+    
+     public LinkedAdyListG quitararistaGrafo() {
+       
+        for (int i = 1; i < numVertices; i++) {           
+                SimpleNode x = vec[i].firstNode();
+                if (x != null) {
+                    int v = x.getData();                          
+                    actualv1 = i;
+                    actualv2 = v;
+                    SList[] ngraf = new SList[vec.length];
+                    boolean[] activoA = new boolean[vec.length];
+                    for (int p = 1; p < vec.length + 1; p++) {
+                        SList l[] = new SList[vec.length];
+                        l[p] = vec[p];
+                    }
+                    LinkedAdyListG g = new LinkedAdyListG(ngraf, activoA);
+                    g.eliminaArista(i, v);
+                    arist = arist + 1;
+                    return (g);
+                }
+            }
+        
+        return (null);
+
+    }
+    
+
     /**
      * Eliminia la arista v1,v2 de la lista de adyasencia, eliminando los nodos
      * del vector en la posicion v1, y posicion v2.
@@ -199,7 +228,6 @@ public void insertaArista(int i, int j) {
             }
         }
     }
-              
 
     public LinkedAdyListG fusionarArista() {
         // variables que se obtienen al seleccionar una arista a borrar, estas variables se obtienen por fuera del método     
@@ -254,13 +282,11 @@ public void insertaArista(int i, int j) {
      * Este metodo determina si el grafo denso o no, si es denso el resultado de
      * la operacion alojada debe se >= que 1 de lo contrario es menos denso
      *
-     * @param n
-     * @param m
      * @return
      */
-    public boolean isDenso(int n, int m) {
+    public boolean isDenso() {
         boolean esDenso = false;
-        int resultado = (2 * m) / n * (n - 1);
+        int resultado = (2 * arist) / numVertices * (numVertices - 1);
         if (resultado >= 1) {
             esDenso = true;
         }
@@ -339,9 +365,6 @@ public void insertaArista(int i, int j) {
         System.out.println("-------");
       
          */
-        
-        
-        
-        
+
     }
 }
