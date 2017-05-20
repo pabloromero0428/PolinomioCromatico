@@ -5,8 +5,6 @@ import java.io.File;
 import java.io.IOException;
 import modelo.Polynom;
 
-
-
 public class ControlPolyC {
     PolyC  polyC;
     LinkedAdyListG grafo;

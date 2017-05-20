@@ -3,6 +3,7 @@ package Vista;
 import Controlador.ControlPolyC;
 import java.awt.FlowLayout;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 import javax.swing.JFileChooser;
