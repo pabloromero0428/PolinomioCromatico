@@ -99,7 +99,7 @@ public class ViewPolyC extends javax.swing.JFrame {
         getFile();
         try {
             control.costruirGrafo(file);
-            control.guardarResultados();
+            control.guardarResultados(file.getPath());
             jTextArea1.setText(jTextArea1.getText().concat(control.polynom.writePoly()) + "\n ");
 
         } catch (NoSuchElementException e) {

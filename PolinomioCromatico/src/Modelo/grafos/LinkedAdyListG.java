@@ -288,7 +288,6 @@ public class LinkedAdyListG {
         }
 
         LinkedAdyListG g = new LinkedAdyListG(v, activoA);
-
         return g;
     }
 
@@ -314,8 +313,8 @@ public class LinkedAdyListG {
     public boolean completo() {
         boolean escompleto = true;
         int contador;
-
-        for (int i = 1; i < ver; i++) {
+        int i = 1;
+        for ( i = 1; i < numVertices; i++) {
             SimpleNode y = vec[i].firstNode();
             if (y == null) {
                 return (false);
@@ -331,7 +330,7 @@ public class LinkedAdyListG {
                 }
 
             }
-            if (contador != ver - 1) {
+            if (contador != numVertices - 1) {
                 escompleto = false;
                 System.out.println("no es completo");
                 return (escompleto);
@@ -360,16 +359,7 @@ public class LinkedAdyListG {
             System.out.println("FIN");
         }
     }
-
-    public boolean lineal() {
-        for (int i = 1; i < ver; i++) {
-            SimpleNode x = vec[i].firstNode();
-            if (x != null) {
-                return (false);
-            }
-        }
-        return (true);
-    }
+   
 
     public int getActualv1() {
         return actualv1;
@@ -383,7 +373,7 @@ public class LinkedAdyListG {
 
         boolean disperso = true;
 
-        for (int i = 1; i <= vec.length - 1; i++) {
+        for (int i = 1; i <= vec.length; i++) {
             SimpleNode x = vec[i].firstNode();
             if (x != null) {
                 return (false);
@@ -405,7 +395,7 @@ public class LinkedAdyListG {
         Monomio m = new Monomio();
         String s;
 
-        for (int i = 1; i < numVertices; i++) {
+        for (int i = 0; i < numVertices; i++) {
             s = "x-" + i;
             Polynom q = new Polynom(s);
             p = p.multiplicar(q);
@@ -429,7 +419,7 @@ public class LinkedAdyListG {
         l.imprimirGrafo();
         System.out.println("-------------- l ");
         //l.AgreararistaGrafo();
-        g = l.fusionarArista(1, 3);
+        g = l.fusionarArista(1, 9);
         System.out.println("-------------- g ");
         g.imprimirGrafo();
         //l.quitararistaGrafo();
