@@ -5,7 +5,7 @@ import Modelo.Listas.Monomio;
 import Modelo.Listas.SList;
 import java.io.File;
 import Modelo.Listas.SimpleNode;
-import java.awt.FlowLayout;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -37,12 +37,23 @@ public class LinkedAdyListG {
         this.vec = v;
         this.activo = activos;
         activos[0] = false;
-        this.numVertices = v.length - 1;
         this.arist = arista;
-        ver = numVertices;
-        int i = v.length;
+        numVertices=0;
+        
+        //contar vértices
+        for (int i = 1; i <= activo.length; i++) {
+            if (activo[i]) {
+               numVertices++;
+                System.out.println(numVertices);
+            }
+        } 
+        ver = numVertices;  
+    }
 
-        //this.numVertices = v.length - 1;
+    private int getNumVertices() {
+        int cont = 0;
+        
+        return cont;
     }
 
     public LinkedAdyListG(File direccion) throws FileNotFoundException, IOException {
@@ -138,8 +149,8 @@ public class LinkedAdyListG {
     public LinkedAdyListG AgreararistaGrafo() {
         boolean existe = false;
         int w = 0;
-        for (int i = 1; i <= numVertices; i++) {
-            for (int j = 1; j <= numVertices; j++) {
+        for (int i = 1; i <= vec.length; i++) {
+            for (int j = 1; j <= vec.length; j++) {
                 existe = false;
                 SimpleNode x = vec[i].firstNode();
                 while (x != null) {
@@ -164,11 +175,13 @@ public class LinkedAdyListG {
                     actualv2 = w;
                     SList[] v = new SList[vec.length];
                     boolean[] activoA = new boolean[vec.length];
+                    
                     for (int k = 1; k < vec.length; k++) {
                         SList l = new SList();
                         v[k] = l;
                         activoA[k] = activo[k];
                     }
+                    
                     for (int p = 1; p <= vec.length - 1; p++) {
                         SimpleNode y = vec[p].firstNode();
                         while (y != null) {
@@ -192,7 +205,7 @@ public class LinkedAdyListG {
 
     public LinkedAdyListG quitararistaGrafo() {
 
-        for (int i = 1; i < numVertices; i++) {
+        for (int i = 1; i <= vec.length; i++) {
             SimpleNode x = vec[i].firstNode();
             if (x != null) {
                 int v = x.getData();
@@ -336,8 +349,7 @@ public class LinkedAdyListG {
             SimpleNode x = vec[i].firstNode();
             contador = 0;
             if (!activo[i]) {
-            } 
-            else {
+            } else {
                 while (x != null) {
                     if (x.getData() == (i)) {
                         x = x.getLink();
@@ -363,7 +375,7 @@ public class LinkedAdyListG {
     public void imprimirGrafo() {
 
         System.out.println("El grafo contiene " + numVertices + " vértices: \n");
-        for (int i = 1; i < numVertices + 1; i++) {
+        for (int i = 1; i <= vec.length + 1; i++) {
             System.out.println("vértice " + i + ": ");
             SimpleNode aux;
             if (vec[i] != null) {
@@ -401,7 +413,6 @@ public class LinkedAdyListG {
 
     public Polynom calcularDisperso() {
         int n = numVertices;
-        //int n = (vec.length-1);
         Polynom p = new Polynom("x" + n);
         return p;
     }
