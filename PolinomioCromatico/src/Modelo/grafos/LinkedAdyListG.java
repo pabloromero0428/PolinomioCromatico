@@ -257,38 +257,30 @@ public class LinkedAdyListG {
         boolean[] activoA = new boolean[vec.length]; // controla si el vertice está borrado o está sin conexiones falso si no está activo, verdadero si es un vértice solo
         activoA[0] = true;
         int d;                                      // recoge el dato del nodo actual
-        int c = 0;
-        boolean r = true;
+        int c = j;
         SList[] v = new SList[vec.length];
         activoA[i] = false;
 
         for (int k = 1; k <= vec.length - 1; k++) {
 
             SList list = vec[k];
-            SimpleNode x = list.firstNode();
+            v[k] = new SList();
 
-            if (activo[k] = false) {//si el vértice del grafo a eliminar arista no está activo, se desactiva el vértice del grafo de salida y se pasa al siguiente vertice
-                activoA[k] = false;
-            } else if (k != i) { //  si no es el vertice  borrar
+            if (k != i) { //  si no es el vertice  borrar
+
+                SimpleNode x = list.firstNode();
 
                 while (!list.isTheEnd(x)) {
                     // es un nodo  con dato normal a pasar tan cual
                     d = x.getData();
                     if (d != i) {
-
-                        v[k] = new SList();
                         v[k].insert(d, v[k].lastNode());
                         activoA[k] = true;
 
-                    } else if (r) {
-                        v[k] = new SList();
-                        v[k].insert(j, v[k].lastNode());
-                        activoA[k] = true;
-                        c = k;
-                        r = false;
-                    } else if (d != c) {
+                    } else {
                         v[k].insert(c, v[k].lastNode());
                         activoA[k] = true;
+                        c = k;
                     }
                     x = x.getLink();
                 }
@@ -296,7 +288,7 @@ public class LinkedAdyListG {
         }
 
         LinkedAdyListG g = new LinkedAdyListG(v, activoA);
-        g.imprimirGrafo();
+
         return g;
     }
 
@@ -322,11 +314,11 @@ public class LinkedAdyListG {
     public boolean completo() {
         boolean escompleto = true;
         int contador;
-        
+
         for (int i = 1; i < ver; i++) {
             SimpleNode y = vec[i].firstNode();
-            if(y == null){
-                return(false);
+            if (y == null) {
+                return (false);
             }
             SimpleNode x = vec[i].firstNode();
             contador = 0;
@@ -389,13 +381,12 @@ public class LinkedAdyListG {
 
     public boolean isDisperso() {
 
-        
         boolean disperso = true;
-        
-        for (int i = 1; i <= vec.length-1; i++) {
-           SimpleNode x = vec[i].firstNode();
+
+        for (int i = 1; i <= vec.length - 1; i++) {
+            SimpleNode x = vec[i].firstNode();
             if (x != null) {
-                return(false);
+                return (false);
             }
         }
         return disperso;
@@ -418,7 +409,7 @@ public class LinkedAdyListG {
             s = "x-" + i;
             Polynom q = new Polynom(s);
             p = p.multiplicar(q);
-        }        
+        }
         return p;
     }
 
@@ -438,13 +429,11 @@ public class LinkedAdyListG {
         l.imprimirGrafo();
         System.out.println("-------------- l ");
         //l.AgreararistaGrafo();
-        //g = l.fusionarArista(2, 3);
+        g = l.fusionarArista(1, 3);
         System.out.println("-------------- g ");
-        //g.imprimirGrafo();
+        g.imprimirGrafo();
         //l.quitararistaGrafo();
         System.out.println("-------------- g ");
-              
-        
 
     }
 }
