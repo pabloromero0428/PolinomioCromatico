@@ -17,10 +17,8 @@ public class ControlPolyC {
    
     }
 
-    public void calcularPolinomioCromatico() {
-        
-        polynom = polyC.calcularPoly(grafo);
-        
+    public void calcularPolinomioCromatico() {        
+        polynom = polyC.calcularPoly(grafo);     
     
     }
 

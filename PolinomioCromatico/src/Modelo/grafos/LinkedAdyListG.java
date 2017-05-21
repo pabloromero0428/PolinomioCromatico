@@ -55,6 +55,7 @@ public class LinkedAdyListG {
                     for (int i = 1; i < numVertices + 1; i++) {
                         SList l = new SList();
                         vec[i] = l;
+                        activo[i]=true;
                     }
                 }
                 if (tipo.equalsIgnoreCase("e")) {
@@ -79,6 +80,7 @@ public class LinkedAdyListG {
                         if (existe == false) {
                             vec[ver1].insert(ver2, null);
                             vec[ver2].insert(ver1, null);
+                            
                         }
                     }
                 }
@@ -392,8 +394,7 @@ public class LinkedAdyListG {
     public Polynom calcularDisperso() {
        int n = numVertices;
        //int n = (vec.length-1);
-       Polynom p = new Polynom("x"+n);
-       
+       Polynom p = new Polynom("x"+n);       
        return p;       
     }
 
@@ -403,8 +404,7 @@ public class LinkedAdyListG {
         Monomio m = new Monomio();
         String s;
         
-        for (int i = 0; i < numVertices; i++) {
-            
+        for (int i = 0; i < numVertices; i++) {            
             s= "x-"+i;
             Polynom q = new Polynom(s);
             p=p.multiplicar(q);
