@@ -22,14 +22,26 @@ public class LinkedAdyListG {
     private int arist;
     private boolean[] activo;
     private int actualv1;
+
+    public void setActualv1(int actualv1) {
+        this.actualv1 = actualv1;
+    }
+
+    public void setActualv2(int actualv2) {
+        this.actualv2 = actualv2;
+    }
     private int actualv2;
 
     //Constructor que recibe un vector de listas por parámetro y el vector de activos
-    public LinkedAdyListG(SList v[], boolean activos[]) {
+    public LinkedAdyListG(SList v[], boolean activos[], int arista) {
         this.vec = v;
         this.activo = activos;
-        activos[0] = true;
+        activos[0] = false;
         this.numVertices = v.length - 1;
+        this.arist = arista;
+        ver = numVertices;
+        int i = v.length;
+
         //this.numVertices = v.length - 1;
     }
 
@@ -125,14 +137,14 @@ public class LinkedAdyListG {
 
     public LinkedAdyListG AgreararistaGrafo() {
         boolean existe = false;
-        for (int i = 1; i < numVertices; i++) {
-            for (int j = 1; j < numVertices; j++) {
+        int w = 0;
+        for (int i = 1; i <= numVertices; i++) {
+            for (int j = 1; j <= numVertices; j++) {
                 existe = false;
                 SimpleNode x = vec[i].firstNode();
                 while (x != null) {
                     if (j == i) {
                         existe = true;
-                        x = null;
                         break;
                     }
                     if (x.getData() == j) {
@@ -141,19 +153,21 @@ public class LinkedAdyListG {
                         break;
 
                     } else {
-                        break;
+                        x = x.getLink();
+                        w = j;
                     }
 
                 }
-                if (existe == false) {
+
+                if (existe == false && activo[i] == true) {
                     actualv1 = i;
-                    actualv2 = j;
+                    actualv2 = w;
                     SList[] v = new SList[vec.length];
                     boolean[] activoA = new boolean[vec.length];
                     for (int k = 1; k < vec.length; k++) {
                         SList l = new SList();
                         v[k] = l;
-                        activoA[k] = true;
+                        activoA[k] = activo[k];
                     }
                     for (int p = 1; p <= vec.length - 1; p++) {
                         SimpleNode y = vec[p].firstNode();
@@ -163,10 +177,11 @@ public class LinkedAdyListG {
                         }
 
                     }
-                    LinkedAdyListG g = new LinkedAdyListG(v, activoA);
-                    g.insertaArista(i, j);
-                    g.imprimirGrafo();
                     arist = arist + 1;
+                    LinkedAdyListG g = new LinkedAdyListG(v, activoA, arist);
+                    g.insertaArista(i, w);
+                    g.imprimirGrafo();
+
                     return (g);
                 }
             }
@@ -198,11 +213,10 @@ public class LinkedAdyListG {
                     }
 
                 }
-
-                LinkedAdyListG g = new LinkedAdyListG(ngraf, activoA);
+                arist = arist + 1;
+                LinkedAdyListG g = new LinkedAdyListG(ngraf, activoA, arist);
                 g.eliminaArista(i, v);
 
-                arist = arist + 1;
                 return (g);
             }
         }
@@ -287,7 +301,7 @@ public class LinkedAdyListG {
             }
         }
 
-        LinkedAdyListG g = new LinkedAdyListG(v, activoA);
+        LinkedAdyListG g = new LinkedAdyListG(v, activoA, arist - 1);
         return g;
     }
 
@@ -313,27 +327,31 @@ public class LinkedAdyListG {
     public boolean completo() {
         boolean escompleto = true;
         int contador;
-        int i = 1;
-        for ( i = 1; i < numVertices; i++) {
+
+        for (int i = 1; i <= numVertices; i++) {
             SimpleNode y = vec[i].firstNode();
             if (y == null) {
                 return (false);
             }
             SimpleNode x = vec[i].firstNode();
             contador = 0;
-            while (x != null) {
-                if (x.getData() == (i)) {
-                    x = x.getLink();
-                } else {
-                    contador = contador + 1;
-                    x = x.getLink();
-                }
+            if (!activo[i]) {
+            } 
+            else {
+                while (x != null) {
+                    if (x.getData() == (i)) {
+                        x = x.getLink();
+                    } else {
+                        contador = contador + 1;
+                        x = x.getLink();
+                    }
 
-            }
-            if (contador != numVertices - 1) {
-                escompleto = false;
-                System.out.println("no es completo");
-                return (escompleto);
+                }
+                if (contador != numVertices - 1) {
+                    escompleto = false;
+                    System.out.println("no es completo");
+                    return (escompleto);
+                }
             }
         }
         return (escompleto);
@@ -359,7 +377,6 @@ public class LinkedAdyListG {
             System.out.println("FIN");
         }
     }
-   
 
     public int getActualv1() {
         return actualv1;
@@ -403,27 +420,27 @@ public class LinkedAdyListG {
         return p;
     }
 
-    public static void main(String[] args) throws IOException {
-
-        JFrame j = new JFrame();
-        JFrame.setDefaultLookAndFeelDecorated(true);
-        j.setLayout(new FlowLayout());
-        j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Archivo a = new Archivo();
-        a.setFile(j);
-        File f = a.getFile();
-        LinkedAdyListG l = new LinkedAdyListG(f);
-        LinkedAdyListG g;
-        //l.completo();
-        System.out.println("-------------- l ");
-        l.imprimirGrafo();
-        System.out.println("-------------- l ");
-        //l.AgreararistaGrafo();
-        g = l.fusionarArista(1, 9);
-        System.out.println("-------------- g ");
-        g.imprimirGrafo();
-        //l.quitararistaGrafo();
-        System.out.println("-------------- g ");
-
-    }
+//    public static void main(String[] args) throws IOException {
+//
+//        JFrame j = new JFrame();
+//        JFrame.setDefaultLookAndFeelDecorated(true);
+//        j.setLayout(new FlowLayout());
+//        j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        Archivo a = new Archivo();
+//        a.setFile(j);
+//        File f = a.getFile();
+//        LinkedAdyListG l = new LinkedAdyListG(f);
+//        LinkedAdyListG g;
+//        //l.completo();
+//        System.out.println("-------------- l ");
+//        l.imprimirGrafo();
+//        System.out.println("-------------- l ");
+//        //l.AgreararistaGrafo();
+//        g = l.fusionarArista(1, 9);
+//        System.out.println("-------------- g ");
+//        g.imprimirGrafo();
+//        //l.quitararistaGrafo();
+//        System.out.println("-------------- g ");
+//
+//    }
 }
