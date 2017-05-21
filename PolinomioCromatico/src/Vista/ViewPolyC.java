@@ -93,7 +93,7 @@ public class ViewPolyC extends javax.swing.JFrame {
         getFile();
         try {
             control.costruirGrafo(file);
-            control.calcularPolinomioCromatico();
+            //control.calcularPolinomioCromatico();
             control.calcularCPU();
             control.guardarResultados(getPath());
             
@@ -129,6 +129,8 @@ public class ViewPolyC extends javax.swing.JFrame {
         String ruta = file.getPath();
         return ruta;
     }
+    
+    
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

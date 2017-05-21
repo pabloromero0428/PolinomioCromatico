@@ -31,6 +31,7 @@ public class LinkedAdyListG {
         this.vec = v;
         this.activo = activos;
         activos[0]=true;
+        this.numVertices = v.length-1;
         //this.numVertices = v.length - 1;
     }
 
@@ -151,12 +152,23 @@ public class LinkedAdyListG {
                     actualv2 = j;
                     SList[] v = new SList[vec.length];
                     boolean[] activoA = new boolean[vec.length];
-                    for (int p = 1; p < vec.length + 1; p++) {
-                        SList l[] = new SList[vec.length];
-                        l[p] = vec[p];
+                    for (int k = 1;k < vec.length ; k++) {
+                        SList l = new SList();
+                        v[k] = l;
+                        activoA[k]=true;
                     }
-                    LinkedAdyListG g = new LinkedAdyListG(v, activoA);
+                    for (int p = 1; p <= vec.length-1; p++) {  
+                        SimpleNode y = vec[p].firstNode();
+                        while (y != null){
+                            v[p].insert(y.getData(), null);
+                            y = y.getLink();
+                        }
+                        
+                        
+                    }
+                    LinkedAdyListG g = new LinkedAdyListG(v, activoA);                    
                     g.insertaArista(i, j);
+                    g.imprimirGrafo();
                     arist = arist + 1;
                     return (g);
                 }
@@ -176,12 +188,23 @@ public class LinkedAdyListG {
                     actualv2 = v;
                     SList[] ngraf = new SList[vec.length];
                     boolean[] activoA = new boolean[vec.length];
-                    for (int p = 1; p < vec.length + 1; p++) {
-                        SList l[] = new SList[vec.length];
-                        l[p] = vec[p];
+                      for (int k = 1;k < vec.length ; k++) {
+                        SList l = new SList();
+                        ngraf[k] = l;
+                        activoA[k]=true;
                     }
+                      for (int p = 1; p <= vec.length-1; p++) {  
+                        SimpleNode y = vec[p].firstNode();
+                        while (y != null){
+                            ngraf[p].insert(y.getData(), null);
+                            y = y.getLink();
+                        }                      
+                        
+                    } 
+                      
                     LinkedAdyListG g = new LinkedAdyListG(ngraf, activoA);
                     g.eliminaArista(i, v);
+                    
                     arist = arist + 1;
                     return (g);
                 }
@@ -199,7 +222,7 @@ public class LinkedAdyListG {
      * @param v2
      */
     public void eliminaArista(int v1, int v2) {
-        if (v2 > numVertices && v1 > numVertices) {
+        if (v2 < numVertices && v1 < numVertices) {
             System.out.println("Error, no existe el vértice en el grafo");
         } else if (v1 <= numVertices) {
             SimpleNode x = vec[v1].firstNode();
@@ -243,7 +266,7 @@ public class LinkedAdyListG {
         int d;                                      // recoge el dato del nodo actual
         SList[] v = new SList[vec.length];
 
-        for (int k = 1; k <= vec.length; k++) {
+        for (int k = 1; k <= vec.length-1; k++) {
 
             SList list = vec[k];
             SimpleNode x = list.firstNode();
@@ -257,10 +280,12 @@ public class LinkedAdyListG {
                     d = x.getData();
                     if (d != i) {
                         if (d != j) {
+                             v[k] = new SList();
                             v[k].insert(d, v[k].lastNode());
                             activoA[k] = true;
                         }
                     } else if (k != j) {
+                        v[k] = new SList();
                         v[k].insert(j, v[k].lastNode());
                         activoA[k] = true;
                     }
@@ -271,6 +296,7 @@ public class LinkedAdyListG {
                 while (!list.isTheEnd(x)) {
                     d = x.getData();
                     if (d != i) {
+                        v[j] = new SList();
                         v[j].insert(d, v[j].lastNode());
                     }
                     x = x.getLink();
@@ -280,6 +306,7 @@ public class LinkedAdyListG {
             }
         }
         LinkedAdyListG g = new LinkedAdyListG(v, activoA);
+        g.imprimirGrafo();
         return g;
     }
 
@@ -335,11 +362,14 @@ public class LinkedAdyListG {
         for (int i = 1; i < numVertices + 1; i++) {
             System.out.println("vértice " + i + ": ");
             SimpleNode aux;
-            aux = vec[i].firstNode();
-            while (aux != null) {
+            if(vec[i] != null){
+                aux = vec[i].firstNode();
+                while (aux != null) {
                 System.out.println(aux.getData());
                 aux = aux.getLink();
             }
+            }
+            
             System.out.println("FIN");
         }
     }
@@ -411,7 +441,12 @@ public class LinkedAdyListG {
         LinkedAdyListG l = new LinkedAdyListG(f);
         l.completo();
         System.out.println("--------------");
-        l.imprimirGrafo();       
+        //l.AgreararistaGrafo();
+        l.fusionarArista(2, 1);
+        //l.imprimirGrafo();
+        //l.quitararistaGrafo();
+        System.out.println("--------------");        
+        //l.imprimirGrafo();       
         System.out.println("-------");
              
 
