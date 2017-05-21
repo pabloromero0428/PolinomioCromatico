@@ -5,7 +5,7 @@
 *Medellín
 *Version 1.0
  */
-package modelo;
+package Modelo;
 
 import Modelo.Listas.Monomio;
 import Modelo.Listas.DoubleNode;

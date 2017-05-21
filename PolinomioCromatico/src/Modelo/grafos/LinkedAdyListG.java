@@ -1,16 +1,20 @@
 package Modelo.grafos;
 
+import Modelo.Archivo;
 import Modelo.Listas.Monomio;
 import Modelo.Listas.SList;
 import java.io.File;
 import Modelo.Listas.SimpleNode;
+import java.awt.FlowLayout;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.StringTokenizer;
-import modelo.Polynom;
-import sun.net.www.content.audio.x_aiff;
+import javax.swing.JFrame;
+import Modelo.Polynom;
+
+
 
 public class LinkedAdyListG {
 
@@ -35,6 +39,7 @@ public class LinkedAdyListG {
         FileReader fr = new FileReader(direccion);
         BufferedReader br = new BufferedReader(fr);
         String Linea;
+        
 
         if (br != null) {
             while ((Linea = br.readLine()) != null) {
@@ -52,6 +57,7 @@ public class LinkedAdyListG {
                     arist = Integer.parseInt(aristas);
                     numVertices = ver;
                     vec = new SList[numVertices + 1];
+                    activo = new boolean[numVertices+1];
                     for (int i = 1; i < numVertices + 1; i++) {
                         SList l = new SList();
                         vec[i] = l;
@@ -348,27 +354,6 @@ public class LinkedAdyListG {
         return (true);
     }
     
-    
-
-    public static void main(String[] args) {
-        /*
-        JFrame j = new JFrame();
-        JFrame.setDefaultLookAndFeelDecorated(true);
-        j.setLayout(new FlowLayout());
-        j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Archivo a = new Archivo();
-        a.setFile(j);
-        File f = a.getFile();
-        LinkedAdyListG l = new LinkedAdyListG(f);
-        l.completo();
-        System.out.println("--------------");
-        l.imprimirGrafo();       
-        System.out.println("-------");
-      
-         */
-
-    }
-
     public int getActualv1() {
         return actualv1;
     }
@@ -410,5 +395,25 @@ public class LinkedAdyListG {
             p=p.multiplicar(q);
         }
         return p;       
+    }
+       
+    
+
+    public static void main(String[] args) throws IOException {
+       
+        JFrame j = new JFrame();
+        JFrame.setDefaultLookAndFeelDecorated(true);
+        j.setLayout(new FlowLayout());
+        j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Archivo a = new Archivo();
+        a.setFile(j);
+        File f = a.getFile();
+        LinkedAdyListG l = new LinkedAdyListG(f);
+        l.completo();
+        System.out.println("--------------");
+        l.imprimirGrafo();       
+        System.out.println("-------");
+             
+
     }
 }

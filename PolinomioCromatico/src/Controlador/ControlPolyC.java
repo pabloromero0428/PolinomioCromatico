@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import modelo.Polynom;
+import Modelo.Polynom;
 
 public class ControlPolyC {
     PolyC  polyC;
