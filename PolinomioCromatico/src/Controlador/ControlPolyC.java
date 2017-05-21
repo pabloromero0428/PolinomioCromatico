@@ -14,8 +14,7 @@ public class ControlPolyC {
     
     public void costruirGrafo(File file) throws IOException {
         
-       grafo = new LinkedAdyListG(file);
-              
+       grafo = new LinkedAdyListG(file);            
    
     }
 
@@ -31,11 +30,11 @@ public class ControlPolyC {
             time_end = System.currentTimeMillis();
             time_total = time_end - time_start;           
             FileWriter fw = new FileWriter("Registro Asegurados.txt", true); // abro el archivo de lectura
+            File f= new File(path);
             PrintWriter pw = new PrintWriter(fw);   // abro el archivo de escritura
             //separo los campos dentro del archivo
             pw.println("T: "+ time_total + " P(G,x): " + polynom);
             //cierro los archivos de lectura y escritura
-
             pw.close();
             fw.close();
         } catch (IOException ex) {
@@ -45,6 +44,7 @@ public class ControlPolyC {
     }
 
     public void calcularCPU() {
+        
 
     }
     
