@@ -322,7 +322,12 @@ public class LinkedAdyListG {
     public boolean completo() {
         boolean escompleto = true;
         int contador;
+        
         for (int i = 1; i < ver; i++) {
+            SimpleNode y = vec[i].firstNode();
+            if(y == null){
+                return(false);
+            }
             SimpleNode x = vec[i].firstNode();
             contador = 0;
             while (x != null) {
@@ -384,13 +389,13 @@ public class LinkedAdyListG {
 
     public boolean isDisperso() {
 
-        SList s;
+        
         boolean disperso = true;
-
-        for (int i = 1; i <= vec.length; i++) {
-            s = vec[i];
-            if (!s.isEmpty()) {
-                disperso = false;
+        
+        for (int i = 1; i <= vec.length-1; i++) {
+           SimpleNode x = vec[i].firstNode();
+            if (x != null) {
+                return(false);
             }
         }
         return disperso;
@@ -405,15 +410,15 @@ public class LinkedAdyListG {
 
     public Polynom calcularCompleto() {
 
-        Polynom p = new Polynom();
+        Polynom p = new Polynom("x");
         Monomio m = new Monomio();
         String s;
 
-        for (int i = 0; i < numVertices; i++) {
+        for (int i = 1; i < numVertices; i++) {
             s = "x-" + i;
             Polynom q = new Polynom(s);
             p = p.multiplicar(q);
-        }
+        }        
         return p;
     }
 
@@ -433,9 +438,9 @@ public class LinkedAdyListG {
         l.imprimirGrafo();
         System.out.println("-------------- l ");
         //l.AgreararistaGrafo();
-        g = l.fusionarArista(2, 3);
+        //g = l.fusionarArista(2, 3);
         System.out.println("-------------- g ");
-        g.imprimirGrafo();
+        //g.imprimirGrafo();
         //l.quitararistaGrafo();
         System.out.println("-------------- g ");
               
