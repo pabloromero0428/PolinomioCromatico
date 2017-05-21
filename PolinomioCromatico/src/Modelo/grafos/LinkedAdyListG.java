@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.StringTokenizer;
 import javax.swing.JFrame;
 import Modelo.Polynom;
+import java.awt.FlowLayout;
 
 public class LinkedAdyListG {
 
@@ -293,12 +294,12 @@ public class LinkedAdyListG {
             SList list = vec[k];
             v[k] = new SList();
 
-            if (k != i) { //  si no es el vertice  borrar
+            if (k != i) { 
 
                 SimpleNode x = list.firstNode();
 
                 while (!list.isTheEnd(x)) {
-                    // es un nodo  con dato normal a pasar tan cual
+                    
                     d = x.getData();
                     if (d != i) {
                         v[k].insert(d, v[k].lastNode());
@@ -420,7 +421,6 @@ public class LinkedAdyListG {
     public Polynom calcularCompleto() {
 
         Polynom p = new Polynom("x");
-        Monomio m = new Monomio();
         String s;
 
         for (int i = 0; i < numVertices; i++) {
@@ -431,27 +431,25 @@ public class LinkedAdyListG {
         return p;
     }
 
-//    public static void main(String[] args) throws IOException {
-//
-//        JFrame j = new JFrame();
-//        JFrame.setDefaultLookAndFeelDecorated(true);
-//        j.setLayout(new FlowLayout());
-//        j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        Archivo a = new Archivo();
-//        a.setFile(j);
-//        File f = a.getFile();
-//        LinkedAdyListG l = new LinkedAdyListG(f);
-//        LinkedAdyListG g;
-//        //l.completo();
-//        System.out.println("-------------- l ");
-//        l.imprimirGrafo();
-//        System.out.println("-------------- l ");
-//        //l.AgreararistaGrafo();
-//        g = l.fusionarArista(1, 9);
-//        System.out.println("-------------- g ");
-//        g.imprimirGrafo();
-//        //l.quitararistaGrafo();
-//        System.out.println("-------------- g ");
-//
-//    }
+    public static void main(String[] args) throws IOException {
+
+        JFrame j = new JFrame();
+        JFrame.setDefaultLookAndFeelDecorated(true);
+        j.setLayout(new FlowLayout());
+        j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Archivo a = new Archivo();
+        a.setFile(j);
+        File f = a.getFile();
+        LinkedAdyListG l = new LinkedAdyListG(f);
+       LinkedAdyListG g;       //        //l.completo();/        System.out.println("-------------- l ");
+     //  l.imprimirGrafo();
+       System.out.println("-------------- l ");
+     //  l.AgreararistaGrafo();
+        g = l.fusionarArista(1, 9);
+        System.out.println("-------------- g ");
+        g.imprimirGrafo();
+       l.quitararistaGrafo();
+      System.out.println("-------------- g ");
+
+    }
 }
